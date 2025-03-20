@@ -7,5 +7,5 @@
 | **GitHub Pages** | `TMMSoftware/Webpage` | Hosts [https://tmmsoftware.github.io/](https://tmmsoftware.github.io/) |
 
 
-✅ Each project has a dev repo in TheMikestMike and a prod repo in TMMSoftware.
+✅ Each project has a dev repo in TheMikestMike and a prod repo in TMMSoftware.<br>
 ✅ Once code is validated, it moves to TMMSoftware & gets published.
