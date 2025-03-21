@@ -91,5 +91,5 @@ Every repository in **TheMikestMike (Dev)** has a GitHub Action that:
 🔥 **Tests should run on:**
 - ✅ **Pushes to `release/*`**
 - ✅ **Before merging `release/*` → `main`**
-- ✅ _(Optional)_ **Pull Requests if collaborating with others**
+- ✅ **Pull Requests when growing the team and collaborating with others**
 
