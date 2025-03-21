@@ -9,3 +9,4 @@
 
 📌 Each project has a dev repo in TheMikestMike and a prod repo in TMMSoftware.<br>
 ✅ Once code is validated, it moves to TMMSoftware & gets published.
+✅ GitHub Actions automate the movement from TheMikestMike → TMMSoftware.
