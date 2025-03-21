@@ -13,3 +13,14 @@
 ✅ Prod Github has configured a central workflow that applies to all repositories.<br>
 
 
+### 🔄 GitHub Actions Workflow
+
+Every repository in **TheMikestMike (Dev)** has a GitHub Action that:
+
+- ✅ Runs **tests** in release branches (**pre-prod step**).
+- 🚀 If tests pass, the code is **pushed** to the corresponding **TMMSoftware (Prod)** repository.
+- 🔖 **Auto-generates version tags** based on release status:  
+  - Example: `1.0.0-alpha.1 → 1.0.0-beta.0` when ready for beta.
+- 🌐 **Deploys** the `Webpage` repository to **GitHub Pages** at [https://tmmsoftware.github.io/](https://tmmsoftware.github.io/).
+
+
