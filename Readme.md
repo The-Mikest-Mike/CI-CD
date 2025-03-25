@@ -4,28 +4,26 @@
 
 | **GitHub Profile**   | **Repositories** | **Purpose** |
 |----------------------|-----------------|-------------|
-| **TheMikestMike (Dev)** | `WebQuiz-Devnet`, `Gesture-Control-System`, `File-Organizer`, `Webpage` | Active **development & testing**. New features & bug fixes happen here. |
-| **TMMSoftware (Prod)** | `WebQuiz-Devnet`, `Gesture-Control-System`, `File-Organizer`, `Webpage` (or with a `-prod` suffix) | **Production-ready repositories.** Only tested, stable code lands here. |
-| **GitHub Pages** | `TMMSoftware/Webpage` | Hosts [https://tmmsoftware.github.io/](https://tmmsoftware.github.io/) |
+| **TheMikestMike (Dev)** | `WebQuiz-Devnet`, `Gesture-Control-System`, `File-Organizer`, `Webpage` | Active **development** using GitFlow: `feature`, `release`, `hotfix` branches. Code is tested and integrated here. |
+| **TMMSoftware (Prod)** | `WebQuiz-Devnet`, `Gesture-Control-System`, `File-Organizer`, `Webpage` | **Production-ready repositories.** Only tested, CI/CD-passed code lands here. |
+| **GitHub Pages** | `TMMSoftware/Webpage` | Hosts [https://tmmsoftware.github.io/](https://tmmsoftware.github.io/) — reflects the latest deployed site. |
 
-📌 Each project has a **dev repo** in `TheMikestMike` and a **prod repo** in `TMMSoftware`.<br>
-✅ Once code is validated, it moves to `TMMSoftware` & gets published.<br>
-✅ GitHub Actions automate the movement from `TheMikestMike` → `TMMSoftware`.<br>
-✅ `TMMSoftware` has a **centralized workflow** for all repositories.<br>
+📌 Each project has a **Dev → Prod repo flow**.<br>
+✅ Code from `TheMikestMike` is automatically pushed to `TMMSoftware` only after tests pass.<br>
+✅ GitHub Actions live in **Dev repos**, not Prod.<br>
+✅ `TMMSoftware` remains the **single source of truth** for production code.<br>
 
 ---
 
 ### 🔄 GitHub Actions Workflow
 
-Every repository in **TheMikestMike (Dev)** has a GitHub Action that:
+Each Dev repo under `TheMikestMike` includes GitHub Actions that:
 
-- ✅ Runs **tests** in release branches (**pre-prod step**).
-- 🚀 If tests pass, the code is **pushed** to the corresponding **TMMSoftware (Prod)** repository.
-- 🔖 **Auto-generates version tags** based on release status:  
-  - Example: `1.0.0-alpha.1 → 1.0.0-beta.0` when ready for beta.
-- 🌐 **Deploys** the `Webpage` repository to **GitHub Pages** at [https://tmmsoftware.github.io/](https://tmmsoftware.github.io/).
-- 🔬 **Unit & API tests** run in `TheMikestMike` before merging to `TMMSoftware`.
-- 🏗️ **Pre-release testing** is triggered in the `release/*` branch before deployment.
+- ✅ Run **validation jobs** (tests, linting, CI checks) on every push to `release/*`.
+- ✅ If successful, **deploy code automatically** to the matching `TMMSoftware` repo (`main` branch).
+- 🔖 **Tag production-ready releases** (e.g., `v1.0.0-alpha.1`).
+- 🌐 Auto-deploy the **Webpage** to GitHub Pages from `TMMSoftware/Webpage`.
+- 🛠️ Handle `hotfix/*` branches directly from `main` when emergency production fixes are needed.
 
 ---
 
@@ -33,11 +31,11 @@ Every repository in **TheMikestMike (Dev)** has a GitHub Action that:
 
 | Feature                        | ✅ Status |
 |--------------------------------|----------|
-| Tests before production        | ✅ Yes (via `release/*`) |
-| Auto-deploy only on success    | ✅ Yes (`GitHub Actions if: success()`) |
-| Jira integration support       | ✅ Yes (via branch names & commits) |
-| Full automation & rollback     | ✅ Ready to build |
-| Docker / `.dmg` inclusion      | ⏳ (when needed) |
+| Tests before production        | ✅ Yes (`release/*` branch gated) |
+| Auto-deploy only on success    | ✅ Yes (via `if: success()`) |
+| Jira integration support       | ✅ Yes (via branch naming: `PRJ-1234`) |
+| Full automation & rollback     | ✅ In place (via tags + CI gate) |
+| Docker / `.dmg` inclusion      | ⏳ (To be added per repo needs) |
 
 ---
 
@@ -45,50 +43,52 @@ Every repository in **TheMikestMike (Dev)** has a GitHub Action that:
 
 1. **Tag every production deployment**  
    ```sh
-   git tag 1.0.0-alpha.1 && git push origin --tags
+   git tag v1.0.0-alpha.1 && git push origin --tags
    ```
 2. **Revert to a known-good tag in CI/CD**  
    ```sh
-   git checkout 1.0.0-alpha.0  # Switch to stable version
-   git tag 1.0.0-alpha.0 && git push origin --tags  # Re-deploy
+   git checkout v1.0.0-alpha.0
+   git push origin main  # Reverts production repo
    ```
 3. **Optional GitHub Action**  
-   - Set up a **manual workflow** to "Redeploy Tag XYZ" for fast rollback.
+   - Create a manual job: **Redeploy Tag XYZ** for clean rollback.
 
 ---
 
 ### 🌱 Branch Naming with Jira Integration
 
 | Branch Type | Format Example | CI/CD Behavior |
-|------------|---------------|---------------|
-| `feature/` | `feature/PRJ-1234-add-signup-form` | Run lint + unit tests |
-| `release/` | `release/1.0.0-alpha.1` | ✅ Run full test suite (gate for prod) |
-| `hotfix/` | `hotfix/INC-9876-invalidPageMatch` | ✅ Run tests + auto-push to prod |
-| `main` | `main` | ✅ Deploy on successful merge |
-| `master` | _(Avoid both `main` & `master`)_ | ❌ Naming confusion |
+|------------|----------------|----------------|
+| `feature/` | `feature/PRJ-1234-add-signup-form` | 🧪 Lint + unit test (optional) |
+| `release/` | `release/1.0.0-alpha.1` | ✅ Full test suite + auto-push to prod |
+| `hotfix/` | `hotfix/INC-9876-fix-login` | ✅ Test + deploy directly to prod |
+| `main`     | `main` | ✅ Final production truth; accepts merges from `release/*` |
 
 ---
 
-### 🚀 CI/CD Automation Tasks
+### 🚀 CI/CD Automation Summary
 
-- 🛠️ **Tests gate all production deploys.**
-- 🔄 **Every push to `release/*` triggers tests.**
-- ✅ **Successful `release/* → main` merge auto-deploys to `TMMSoftware`.**
-- 🔀 **Rollback = revert the commit or redeploy previous tag.**
-- 📌 **Jira integration** keeps active branches & PRs linked to tickets.
+- 🧪 Tests always gate production deployments.
+- 📦 `release/*` branches are the **deployment trigger**.
+- 🔁 `main` reflects only **tested, tagged production code**.
+- 🔀 Rollbacks happen by **reverting to tags**.
+- 📲 Jira integration shows branch → ticket linkage.
 
 ---
 
 ### 🔬 Testing Strategy
 
-| Option                     | ✅ Pros | ❌ Cons |
-|----------------------------|--------|---------|
-| On every commit            | Fast feedback loop | Can get noisy & redundant |
-| On every PR to `release/*` | Focused validation, good for teamwork | Adds review overhead |
-| **On every push to `release/*` ✅** | Best balance – ensures everything in `release/*` is test-validated | None if tests are quick |
-| On merge to `main` | Final safety net | Too late if you're auto-deploying |
+| When To Test                | ✅ Pros                     | ❌ Cons                          |
+|-----------------------------|-----------------------------|----------------------------------|
+| On every commit             | Fast feedback               | Noisy for large teams            |
+| On PR to `release/*`        | Great collaboration filter  | Adds review overhead             |
+| ✅ On push to `release/*`    | Balanced & production-safe  | Slight test redundancy (acceptable) |
+| On merge to `main`          | Safety net                  | Too late for real CD enforcement |
 
+---
 
+### 🔁 GitFlow + CI/CD Diagram
+```mermaid
 graph TD
 
   subgraph Developer Workflow
@@ -110,19 +110,15 @@ graph TD
     H1([🛠 hotfix/INC-567-crash]) --> F1
     H1 --> B1
   end
+```
 
+---
 
 🔥 **Tests should run on:**
-- ✅ **Pushes to `release/*`**
-- ✅ **Before merging `release/*` → `main`**
-- ✅ **Pull Requests when growing the team and collaborating with others**
+- ✅ Pushes to `release/*`
+- ✅ Pull requests to `release/*`
+- ✅ Before merging `release/* → main`
 
-How to Read It:
-feature/* branches → go into release/* (CI runs here)
+💡 **Main is always the source of truth**, but `release/*` is the gatekeeper to production.
 
-If tests pass ✅ → code is auto-deployed to prod repo
-
-Then, release/* is merged into main → tagged with official version
-
-Hotfixes go straight from hotfix/* → main → release/* if needed
 
