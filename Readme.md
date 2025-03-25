@@ -88,8 +88,41 @@ Every repository in **TheMikestMike (Dev)** has a GitHub Action that:
 | **On every push to `release/*` ✅** | Best balance – ensures everything in `release/*` is test-validated | None if tests are quick |
 | On merge to `main` | Final safety net | Too late if you're auto-deploying |
 
+
+graph TD
+
+  subgraph Developer Workflow
+    A1([🧑‍💻 feature/PRJ-1234-login-fix]) --> B1([📦 release/1.0.0-alpha.1])
+  end
+
+  subgraph CI/CD Pipeline
+    B1 --> C1([✅ Run Tests])
+    C1 -->|Pass| D1([🚀 Deploy to Prod GitHub Repo])
+    C1 -->|Fail| E1([🛑 Stop Deployment])
+  end
+
+  subgraph Production
+    D1 --> F1([🔵 main (production)])
+    F1 --> G1([🏷️ Tag v1.0.0-alpha.1])
+  end
+
+  subgraph Emergency Patch
+    H1([🛠 hotfix/INC-567-crash]) --> F1
+    H1 --> B1
+  end
+
+
 🔥 **Tests should run on:**
 - ✅ **Pushes to `release/*`**
 - ✅ **Before merging `release/*` → `main`**
 - ✅ **Pull Requests when growing the team and collaborating with others**
+
+How to Read It:
+feature/* branches → go into release/* (CI runs here)
+
+If tests pass ✅ → code is auto-deployed to prod repo
+
+Then, release/* is merged into main → tagged with official version
+
+Hotfixes go straight from hotfix/* → main → release/* if needed
 
