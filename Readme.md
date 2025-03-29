@@ -1,5 +1,31 @@
 **Stable CI/CD pipeline** with **automated deployment, rollback capabilities, and version control**. 🚀
 
+Index:
+
+1. Separation between Dev and Prod GitHub profiles
+
+2. GitFlow implementation using feature/, release/, hotfix/, main
+
+3. Use of release/* as your CI/CD deployment trigger (pre-prod gate ✅)
+
+4. GitHub Actions defined only in Dev repos
+
+5. Auto-deploy to TMMSoftware (Prod) on successful validation
+
+6. Staged rollout strategy mentioned
+
+7. Hotfix strategy with direct deploy to main + optional merge to release/*
+
+8. Jira integration via branch naming convention
+
+9. Tag-based rollback workflow
+
+10. Mermaid diagram
+
+11. Dev onboarding with Git + GitFlow setup (macOS-focused)
+
+
+
 ## 🔷 Current CI/CD Workflow
 
 | **GitHub Profile**   | **Repositories** | **Purpose** |
