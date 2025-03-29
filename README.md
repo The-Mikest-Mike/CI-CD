@@ -1,93 +1,62 @@
 **Stable CI/CD pipeline** with **automated deployment, rollback capabilities, and version control**. 🚀
 
-Index:
+## 📚 Table of Contents
 
-1. Separation between Dev and Prod GitHub profiles
-
-2. GitFlow implementation using feature/, release/, hotfix/, main
-
-3. Use of release/* as your CI/CD deployment trigger (pre-prod gate ✅)
-
-4. GitHub Actions defined only in Dev repos
-
-5. Auto-deploy to TMMSoftware (Prod) on successful validation
-
-6. Staged rollout strategy mentioned
-
-7. Hotfix strategy with direct deploy to main + optional merge to release/*
-
-8. Jira integration via branch naming convention
-
-9. Tag-based rollback workflow
-
-10. Mermaid diagram
-
-11. Dev onboarding with Git + GitFlow setup (macOS-focused)
-
-
-# 🚀 GitFlow CI/CD Workflow Guide for macOS Projects
-
-This document outlines the complete step-by-step workflow for developers working on TMMSoftware products using GitFlow and a CI/CD pipeline.
+1. [Separation between Dev and Prod GitHub profiles](#1-separation-between-dev-and-prod-github-profiles)
+2. [GitFlow implementation using `feature/`, `release/`, `hotfix/`, `main`](#2-gitflow-implementation-using-feature-release-hotfix-main)
+3. [Use of `release/*` as CI/CD deployment trigger (pre-prod gate ✅)](#3-use-of-release-as-cicd-deployment-trigger-pre-prod-gate-)
+4. [GitHub Actions defined only in Dev repos](#4-github-actions-defined-only-in-dev-repos)
+5. [Auto-deploy to TMMSoftware (Prod) on successful validation](#5-auto-deploy-to-tmmsoftware-prod-on-successful-validation)
+6. [Staged rollout strategy](#6-staged-rollout-strategy)
+7. [Hotfix strategy with direct deploy to `main`](#7-hotfix-strategy-with-direct-deploy-to-main)
+8. [Jira integration via branch naming convention](#8-jira-integration-via-branch-naming-convention)
+9. [Tag-based rollback workflow](#9-tag-based-rollback-workflow)
+10. [Mermaid diagram](#10-mermaid-diagram)
+11. [Dev onboarding (Git + GitFlow setup for macOS)](#11-dev-onboarding-git--gitflow-setup-for-macos)
 
 ---
 
-## 🔷 Current CI/CD Workflow
+## 1. Separation between Dev and Prod GitHub profiles
 
 | **GitHub Profile**   | **Repositories** | **Purpose** |
 |----------------------|------------------|-------------|
-| **TheMikestMike (Dev)** | `WebQuiz-Devnet`, `Gesture-Control-System`, `File-Organizer`, `Webpage` | Active **development** using GitFlow: `feature`, `release`, `hotfix` branches. Code is tested and integrated here. |
+| **TheMikestMike (Dev)** | `WebQuiz-Devnet`, `Gesture-Control-System`, `File-Organizer`, `Webpage` | Active **development** using GitFlow. Code is tested and integrated here. |
 | **TMMSoftware (Prod)** | `WebQuiz-Devnet`, `Gesture-Control-System`, `File-Organizer`, `Webpage` | **Production-ready repositories.** Only tested, CI/CD-passed code lands here. |
 | **GitHub Pages** | `TMMSoftware/Webpage` | Hosts [https://tmmsoftware.github.io/](https://tmmsoftware.github.io/) — reflects the latest deployed site. |
 
-📌 Each project has a **Dev → Prod repo flow**.<br>
-✅ Only **code merged into `release/*` in TheMikestMike** and validated via CI/CD gets auto-deployed to the `main` branch of the matching `TMMSoftware` repo.<br>
-✅ GitHub Actions live in **Dev repos**, not Prod.<br>
-✅ `TMMSoftware` remains the **single source of truth** for production code.<br>
+## 2. GitFlow implementation using `feature/`, `release/`, `hotfix/`, `main`
 
----
+Branch naming and usage:
+- `feature/PRJ-1234-*`: feature branches tied to Jira tasks
+- `release/*`: used for staging + triggering CI/CD
+- `hotfix/*`: for production bug fixes
+- `main`: stable production source of truth
 
-### 🔄 GitHub Actions Workflow
+## 3. Use of `release/*` as CI/CD deployment trigger (pre-prod gate ✅)
 
-Each Dev repo under `TheMikestMike` includes GitHub Actions that:
+✅ Only **code merged into `release/*` in TheMikestMike** and validated via CI/CD gets auto-deployed to the `main` branch of the matching `TMMSoftware` repo.
+
+## 4. GitHub Actions defined only in Dev repos
+
+✅ GitHub Actions live only in Dev (`TheMikestMike`) repositories.
+✅ No CI workflows are committed to `TMMSoftware` repos to ensure clean production.
+
+## 5. Auto-deploy to TMMSoftware (Prod) on successful validation
 
 - ✅ Run **validation jobs** (tests, linting, CI checks) on every push to `release/*`.
 - ✅ If successful, **deploy code automatically** to the matching `main` branch in the `TMMSoftware` production repository.
-- 🔖 **Tag production-ready releases** (e.g., `v1.0.0-alpha.1`).
-- 🌐 Auto-deploy the **Webpage** to GitHub Pages from `TMMSoftware/Webpage`.
-- 🛠️ Handle `hotfix/*` branches directly from `main` when emergency production fixes are needed.
 
----
+## 6. Staged rollout strategy
 
-### 🔧 Feature Overview
+- ✅ Planned Canary/staged deployment
+- Future clusters and feature flags can help isolate risk and gradually release features
 
-| Feature                        | ✅ Status |
-|--------------------------------|----------|
-| Tests before production        | ✅ Yes (`release/*` branch gated) |
-| Auto-deploy only on success    | ✅ Yes (via `if: success()`) |
-| Jira integration support       | ✅ Yes (via branch naming: `PRJ-1234`) |
-| Full automation & rollback     | ✅ In place (via tags + CI gate) |
-| Canary/staged deployment       | ✅ Planned (via clusters/flags) |
-| Docker / `.dmg` inclusion      | ⏳ (To be added per repo needs) |
+## 7. Hotfix strategy with direct deploy to `main`
 
----
+- ✅ `hotfix/*` branches branch off `main`
+- ✅ Hotfixes are tested and merged directly to `main` (and optionally `release/*`)
 
-### 🛠️ Rollback Plan (Safe & Easy)
-
-1. **Tag every production deployment**  
-   ```sh
-   git tag v1.0.0-alpha.1 && git push origin --tags
-   ```
-2. **Revert to a known-good tag in CI/CD**  
-   ```sh
-   git checkout v1.0.0-alpha.0
-   git push origin main  # Reverts production repo
-   ```
-3. **Optional GitHub Action**  
-   - Create a manual job: **Redeploy Tag XYZ** for clean rollback.
-
----
-
-### 🌱 Branch Naming with Jira Integration
+## 8. Jira integration via branch naming convention
 
 | Branch Type | Format Example | CI/CD Behavior |
 |-------------|----------------|----------------|
@@ -96,43 +65,59 @@ Each Dev repo under `TheMikestMike` includes GitHub Actions that:
 | `hotfix/`   | `hotfix/INC-9876-fix-login`        | ✅ Test + deploy directly to prod |
 | `main`      | `main`                             | ✅ Final production truth; accepts merges from `release/*` |
 
----
+## 9. Tag-based rollback workflow
 
-### 🚀 CI/CD Automation Summary
+1. **Tag every production deployment**  
+   ```sh
+   git tag v1.0.0-alpha.1 && git push origin --tags
+   ```
+2. **Revert to a known-good tag in CI/CD**  
+   ```sh
+   git checkout v1.0.0-alpha.0
+   git push origin main
+   ```
+3. Optional GitHub Action: manual tag redeploy
 
-- 🧪 Tests always gate production deployments.
-- 📦 `release/*` branches are the **deployment trigger**.
-- 🔁 `main` reflects only **tested, tagged production code**.
-- 🔀 Rollbacks happen by **reverting to tags**.
-- 📲 Jira integration shows branch → ticket linkage.
+## 10. Mermaid diagram
 
----
+```mermaid
+flowchart TD
 
-### 🔬 Testing Strategy
+  subgraph Developer_Workflow
+    A1[feature/PRJ-1234-login-fix] --> B1[release/1.0.0-alpha.1]
+  end
 
-| When To Test                | ✅ Pros                     | ❌ Cons                          |
-|-----------------------------|-----------------------------|----------------------------------|
-| On every commit             | Fast feedback               | Noisy for large teams            |
-| On PR to `release/*`        | Great collaboration filter  | Adds review overhead             |
-| ✅ On push to `release/*`    | Balanced & production-safe  | Slight test redundancy (acceptable) |
-| On merge to `main`          | Safety net                  | Too late for real CD enforcement |
+  subgraph CI_CD_Pipeline
+    B1 --> C1[Run Tests]
+    C1 -->|Pass| D1[Deploy to Prod GitHub Repo]
+    C1 -->|Fail| E1[Stop Deployment]
+  end
 
----
+  subgraph Production
+    D1 --> F1[main (production)]
+    F1 --> G1[Tag v1.0.0-alpha.1]
+  end
 
-🔥 **Tests should run on:**
-- ✅ Pushes to `release/*`
-- ✅ Pull requests to `release/*`
-- ✅ Before merging `release/* → main`
+  subgraph Emergency_Patch
+    H1[hotfix/INC-567-crash] --> F1
+    H1 --> B1
+  end
+```
 
-💡 **Main is always the source of truth**, but `release/*` is the gatekeeper to production.
+![GitFlow Diagram](GitFlow_CICD_Workflow.png)
 
----
+## 11. Dev onboarding (Git + GitFlow setup for macOS)
 
-This workflow guarantees:
-- 🔐 Secure, test-gated production releases
-- 🧪 Reliable UAT + Canary strategies
-- 🔄 Easy rollback & patching
-- 📖 Developer onboarding consistency
+```bash
+brew install git
+brew install git-flow
+```
+
+```bash
+git clone https://github.com/TheMikestMike/your-repo.git
+cd your-repo
+git flow init
+```
 
 ✅ Last updated: 2025-03
 
