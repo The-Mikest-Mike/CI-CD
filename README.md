@@ -27,10 +27,10 @@
 ## 2. GitFlow Branching
 
 Branch naming and usage:
-- `feature/PRJ-1234-*`: feature branches tied to Jira tasks
-- `release/*`: used for staging + triggering CI/CD
 - `hotfix/*`: for production bug fixes
 - `main`: stable production source of truth
+- `release/*`: used for staging + triggering CI/CD
+- `feature/PRJ-1234-*`: feature branches tied to Jira tasks
 
 ## 3. Use of `release/*` as CI/CD deployment trigger (pre-prod gate ✅)
 
