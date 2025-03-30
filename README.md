@@ -84,27 +84,27 @@ Branch naming and usage:
 flowchart BT
 
   subgraph Developer_Workflow
-    A1[feature/PRJ-1234-login-fix] --> B1[release/1.0.0-alpha.1]
+    A1["🌱 feature/PRJ-1234-login-fix"] --> B1["🏷️ release/1.0.0-alpha.1"]
   end
 
   subgraph CI_CD_Pipeline
-    B1 --> C1[Run Tests]
-    C1 -->|Pass| D1[Deploy to Prod GitHub Repo]
-    C1 -->|Fail| E1[Stop Deployment]
+    B1 --> C1["🧪 Run Tests"]
+    C1 -->|Pass| D1["🚀 Deploy to Prod GitHub Repo"]
+    C1 -->|Fail| E1["⛔ Stop Deployment"]
   end
 
   subgraph Production
-    D1 --> F1["main production"]
-    F1 --> G1[Tag v1.0.0-alpha.1]
+    D1 --> F1["🖥️ main production"]
+    F1 --> G1["🏷️ Tag v1.0.0-alpha.1"]
   end
 
   subgraph Emergency_Patch
-    H1[hotfix/INC-567-crash] --> F1
+    H1["⚡ hotfix/INC-567-crash"] --> F1
     H1 --> B1
   end
 ```
 
-## 11. Dev onboarding (Git + GitFlow setup for macOS)
+## 11. 🖥️ Dev onboarding (Git + GitFlow setup for macOS)
 
 ```bash
 brew install git
