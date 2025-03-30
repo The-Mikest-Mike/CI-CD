@@ -2,7 +2,7 @@
 
 ## 📚 Table of Contents
 
-1. [Dev vs. Prod GitHub Profiles](#dev-vs-prod-github-profiles)
+1. [Dev vs. Prod GitHub Profiles](#1.-dev-vs-prod-github-profiles)
 2. [GitFlow Branching](#gitflow-branching)
 3. [`release/*` as CI/CD Trigger](#release-as-cicd-trigger)
 4. [GitHub Actions: Dev Repos Only](#github-actions-dev-repos-only)
