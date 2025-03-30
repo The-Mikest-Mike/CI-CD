@@ -81,7 +81,7 @@ Branch naming and usage:
 ## 10. Mermaid diagram
 
 ```mermaid
-flowchart TD
+flowchart BT
 
   subgraph Developer_Workflow
     A1[feature/PRJ-1234-login-fix] --> B1[release/1.0.0-alpha.1]
@@ -94,7 +94,7 @@ flowchart TD
   end
 
   subgraph Production
-    D1 --> F1[main (production)]
+    D1 --> F1["main production"]
     F1 --> G1[Tag v1.0.0-alpha.1]
   end
 
