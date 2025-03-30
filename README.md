@@ -2,7 +2,7 @@
 
 ## 📚 Table of Contents
 
-1. [Dev vs. Prod GitHub Profiles](#1-separation-between-dev-and-prod-github-profiles)
+1. [Dev vs. Prod GitHub Profiles](#1-Dev-vs.-Prod-GitHub-Profiles)
 2. [GitFlow Branching](#2-GitFlow-Branching)
 3. [Use of `release/*` as CI/CD deployment trigger (pre-prod gate ✅)](#3-use-of-release-as-cicd-deployment-trigger-pre-prod-gate-)
 4. [GitHub Actions defined only in Dev repos](#4-github-actions-defined-only-in-dev-repos)
@@ -16,7 +16,8 @@
 
 ---
 
-## 1. Separation between Dev and Prod GitHub profiles
+## 1. Dev vs. Prod GitHub Profiles 
+Separation between Dev and Prod GitHub profiles
 
 | **GitHub Profile**   | **Repositories** | **Purpose** |
 |----------------------|------------------|-------------|
