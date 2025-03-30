@@ -3,7 +3,7 @@
 ## 📚 Table of Contents
 
 1. [Separation between Dev and Prod GitHub profiles](#1-separation-between-dev-and-prod-github-profiles)
-2. [GitFlow implementation using `feature/`, `release/`, `hotfix/`, `main`](#2-gitflow-implementation-using-feature-release-hotfix-main)
+2. [GitFlow Branching](#2-GitFlow-Branching)
 3. [Use of `release/*` as CI/CD deployment trigger (pre-prod gate ✅)](#3-use-of-release-as-cicd-deployment-trigger-pre-prod-gate-)
 4. [GitHub Actions defined only in Dev repos](#4-github-actions-defined-only-in-dev-repos)
 5. [Auto-deploy to TMMSoftware (Prod) on successful validation](#5-auto-deploy-to-tmmsoftware-prod-on-successful-validation)
@@ -24,7 +24,7 @@
 | **TMMSoftware (Prod)** | `WebQuiz-Devnet`, `Gesture-Control-System`, `File-Organizer`, `Webpage` | **Production-ready repositories.** Only tested, CI/CD-passed code lands here. |
 | **GitHub Pages** | `TMMSoftware/Webpage` | Hosts [https://tmmsoftware.github.io/](https://tmmsoftware.github.io/) — reflects the latest deployed site. |
 
-## 2. GitFlow implementation using `feature/`, `release/`, `hotfix/`, `main`
+## 2. GitFlow Branching
 
 Branch naming and usage:
 - `feature/PRJ-1234-*`: feature branches tied to Jira tasks
