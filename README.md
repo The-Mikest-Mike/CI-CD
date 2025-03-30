@@ -104,8 +104,6 @@ flowchart BT
   end
 ```
 
-![GitFlow Diagram](GitFlow_CICD_Workflow.png)
-
 ## 11. Dev onboarding (Git + GitFlow setup for macOS)
 
 ```bash
