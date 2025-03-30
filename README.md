@@ -104,7 +104,7 @@ flowchart BT
   end
 ```
 
-## 11. 🖥️ Dev onboarding (Git + GitFlow setup for macOS)
+## 11. Dev onboarding (Git + GitFlow setup for macOS)
 
 ```bash
 brew install git
