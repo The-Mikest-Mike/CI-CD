@@ -37,36 +37,33 @@
 ---
 
 ## 3. `release/*` as CI/CD Trigger
-*Pre-prod gate: Only code merged into `release/*` in TheMikestMike and validated via CI/CD gets auto-deployed to the `main` branch of the matching TMMSoftware repo.*
+Pre-prod gate: Only code merged into `release/*` in TheMikestMike and validated via CI/CD gets auto-deployed to the `main` branch of the matching TMMSoftware repo.
 
 ---
 
 ## 4. GitHub Actions: Dev Repos Only
-*GitHub Actions live only in Dev (`TheMikestMike`) repositories. No CI workflows are committed to TMMSoftware repos to ensure a clean production environment.*
+GitHub Actions live only in Dev (`TheMikestMike`) repositories. No CI workflows are committed to TMMSoftware repos to ensure a clean production environment.
 
 ---
 
 ## 5. Auto-Deploy on Validation
-*Validation jobs (tests, linting, CI checks) run on every push to `release/*`. If successful, code is auto-deployed to the matching `TMMSoftware` production repository.*
+Validation jobs (tests, linting, CI checks) run on every push to `release/*`. If successful, code is auto-deployed to the matching `TMMSoftware` production repository.
 
-- ✅ Run **validation jobs** (tests, linting, CI checks) on every push to `release/*`.
+- 🧪 Run **validation jobs** (tests, linting, CI checks) on every push to `release/*`.
 - ✅ If successful, **deploy code automatically** to the matching `main` branch in the `TMMSoftware` production repository.
 
 ---
 
 ## 6. Staged Rollout
-*Planned Canary/staged deployment. Future clusters and feature flags can help isolate risk and gradually release features.*
+*Planned Canary deployment help isolate risk and gradually release features.*
 
-- ✅ Planned Canary/staged deployment.
-- Future clusters and feature flags can help isolate risk and gradually release features.
+- Under Development
 
 ---
 
 ## 7. Hotfix: Direct `main` Deploy
-*`hotfix/*` branches branch off `main`. Hotfixes are tested and merged directly to `main` (and optionally to `release/*`).*
-
 - ✅ `hotfix/*` branches branch off `main`.
-- ✅ Hotfixes are tested and merged directly to `main` (and optionally `release/*`).
+- ⚡ Hotfixes are tested and merged directly to `main`.
 
 ---
 
@@ -117,7 +114,7 @@ flowchart BT
 ```
 
 ## 11. Dev Onboarding: Git & GitFlow on macOS
-Install git and git-flow via Homebrew, clone your repository, and initialize Git Flow.
+*Install git and git-flow via Homebrew, clone your repository, and initialize Git Flow.*
 
 ```bash
 brew install git
