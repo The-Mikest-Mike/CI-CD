@@ -3,16 +3,16 @@
 ## 📚 Table of Contents
 
 1. [Dev vs. Prod GitHub Profiles](#1-dev-vs-prod-github-profiles)
-2. [GitFlow Branching](#gitflow-branching)
-3. [`release/*` as CI/CD Trigger](#release-as-cicd-trigger)
-4. [GitHub Actions: Dev Repos Only](#github-actions-dev-repos-only)
-5. [Auto-Deploy on Validation](#auto-deploy-on-validation)
-6. [Staged Rollout](#staged-rollout)
-7. [Hotfix: Direct `main` Deploy](#hotfix-direct-main-deploy)
-8. [Jira Integration: Branch Naming](#jira-integration-branch-naming)
-9. [Tag-Based Rollback](#tag-based-rollback)
-10. [Mermaid Diagram](#mermaid-diagram)
-11. [Dev Onboarding: Git & GitFlow on macOS](#dev-onboarding-git--gitflow-on-macos)
+2. [GitFlow Branching](#2-gitflow-branching)
+3. [`release/*` as CI/CD Trigger](#3-release-as-cicd-trigger)
+4. [GitHub Actions: Dev Repos Only](#4-github-actions-dev-repos-only)
+5. [Auto-Deploy on Validation](#5-auto-deploy-on-validation)
+6. [Staged Rollout](#6-staged-rollout)
+7. [Hotfix: Direct `main` Deploy](#7-hotfix-direct-main-deploy)
+8. [Jira Integration: Branch Naming](#8-jira-integration-branch-naming)
+9. [Tag-Based Rollback](#9-tag-based-rollback)
+10. [Mermaid Diagram](#10-mermaid-diagram)
+11. [Dev Onboarding: Git & GitFlow on macOS](#11-dev-onboarding-git--gitflow-on-macos)
 
 ---
 
