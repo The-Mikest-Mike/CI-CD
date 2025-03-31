@@ -85,6 +85,7 @@ Validation jobs (tests, linting, CI checks) run on every push to `release/*`. If
 1. **Tag every production deployment**  
    ```sh
    git tag v1.0.0-alpha.1 && git push origin --tags
+   ```
 
 
 ## 10. Mermaid diagram
